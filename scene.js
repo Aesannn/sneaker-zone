@@ -298,38 +298,60 @@ function setupScrollAnimations() {
       trigger: '.featured',
       start: 'top bottom',
       end: 'top 10%',
-      scrub: 0.5, // Smoother scrub
-      invalidateOnRefresh: true,
-      onLeaveBack: () => {
-        gsap.set(shoeGroup.position, { x: 0, y: 0, z: 0 });
-        gsap.set(shoeGroup.scale, { x: 1, y: 1, z: 1 });
-        gsap.set(shoeGroup.rotation, { x: 0, y: 0, z: 0 });
-      }
+      scrub: 1.2, // Much smoother scrub to handle complex rotation
+      invalidateOnRefresh: true
     },
   });
 
-  tlHeroToFeatured.to(bgClearColor, { r: 0.005, g: 0, b: 0.01, duration: 2 }, 0);
+  tlHeroToFeatured.to(bgClearColor, { r: 0.005, g: 0, b: 0.01, duration: 4 }, 0);
 
-  // Position and Scale
-  tlHeroToFeatured.to(shoeGroup.position, { x: targetX, y: targetY, z: 0, duration: 2, ease: 'power2.inOut' }, 0);
-  tlHeroToFeatured.to(shoeGroup.scale, { x: targetScale, y: targetScale, z: targetScale, duration: 2, ease: 'power2.inOut' }, 0);
+  // Position and Scale - UNIFIED across the whole timeline to prevent jumps
+  tlHeroToFeatured.to(shoeGroup.position, { 
+    x: targetX, 
+    y: targetY, 
+    z: 0, 
+    duration: 4, 
+    ease: 'power1.inOut' 
+  }, 0);
+  
+  tlHeroToFeatured.to(shoeGroup.scale, { 
+    x: targetScale, 
+    y: targetScale, 
+    z: targetScale, 
+    duration: 4, 
+    ease: 'power1.inOut' 
+  }, 0);
 
-  // ANIMATION SEQUENCE
-  // 1. Flip once in Y axis (Side Spin)
+  // 4-PHASE FLIP SEQUENCE
+  // 1. Y-axis flip (Side Spin)
   tlHeroToFeatured.to(shoeGroup.rotation, { 
     y: Math.PI * 2, 
-    duration: 1.5, 
+    duration: 1, 
     ease: 'power2.inOut' 
   }, 0);
 
-  // 2. Slight delay/pause (implied by duration gaps or deliberate empty tween)
-  
-  // 3. Reverse flip in X axis (Back Flip) with slight delay
+  // 2. X-axis flip (Front Flip)
   tlHeroToFeatured.to(shoeGroup.rotation, { 
-    x: -Math.PI * 2, 
-    duration: 1.5, 
+    x: Math.PI * 2, 
+    duration: 1, 
     ease: 'power2.inOut' 
-  }, 1.8); // Starts at 1.8s (after Y spin completes at 1.5s + 0.3s delay)
+  }, 1);
+
+  // 3. Y-axis reverse flip
+  tlHeroToFeatured.to(shoeGroup.rotation, { 
+    y: 0, 
+    duration: 1, 
+    ease: 'power2.inOut' 
+  }, 2);
+
+  // 4. X-axis reverse flip + Settle to Featured Tilt
+  tlHeroToFeatured.to(shoeGroup.rotation, { 
+    x: 0.1, 
+    y: -Math.PI / 3, 
+    z: 0.1,
+    duration: 1, 
+    ease: 'power2.out' 
+  }, 3);
 
   // Phase 2: Disappear before Collection
   const tlFeaturedToCollection = gsap.timeline({
