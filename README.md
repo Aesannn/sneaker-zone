@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # SNEAKER ZONE — DEFY THE VOID
 
 A high-end, futuristic 3D sneaker showroom built with Three.js, GSAP, and Lenis. Experience the next generation of digital retail.
@@ -40,3 +41,7 @@ Hosted on **Vercel**. Connect your GitHub repository for automatic deployments.
 
 ---
 Created by [Aesannn](https://github.com/Aesannn)
+=======
+# sneaker-zone
+Immersive. Fluid. Premium. A next-gen 3D sneaker web experience.
+>>>>>>> fa38a7e640c9f9d97d0dd94833eb20d2050f117c

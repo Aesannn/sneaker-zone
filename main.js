@@ -209,7 +209,7 @@ window.addToCart = function (btn) {
       size: selectedSize,
       price: 289,
       img: 'featured',
-      imgSrc: './assets/New Drops/Aegis Prime.png' // Fallback for featured 3D
+      imgSrc: '/assets/New Drops/Aegis Prime.png' // Fallback for featured 3D
     };
 
     
@@ -609,7 +609,7 @@ if (introCanvas) {
   const introCtx = introCanvas.getContext('2d');
 
   const frameCount = 82;
-  const currentFramePath = index => `./assets/Best Sellers/Best Sellers_${index.toString().padStart(3, '0')}.webp`;
+  const currentFramePath = index => `/assets/Best Sellers/Best Sellers_${index.toString().padStart(3, '0')}.webp`;
 
   const introImages = [];
   const sequenceState = { frame: 0 };
