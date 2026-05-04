@@ -298,19 +298,20 @@ function setupScrollAnimations() {
       trigger: '.featured',
       start: 'top bottom',
       end: 'top 10%',
-      scrub: 1.2, // Much smoother scrub to handle complex rotation
+      scrub: 1.5, // Even smoother scrub
       invalidateOnRefresh: true
     },
   });
 
-  tlHeroToFeatured.to(bgClearColor, { r: 0.005, g: 0, b: 0.01, duration: 4 }, 0);
+  tlHeroToFeatured.to(bgClearColor, { r: 0.005, g: 0, b: 0.01, duration: 4.6 }, 0);
 
   // Position and Scale - UNIFIED across the whole timeline to prevent jumps
+  // We use duration 4.6 to cover all phases + pauses
   tlHeroToFeatured.to(shoeGroup.position, { 
     x: targetX, 
     y: targetY, 
     z: 0, 
-    duration: 4, 
+    duration: 4.6, 
     ease: 'power1.inOut' 
   }, 0);
   
@@ -318,11 +319,11 @@ function setupScrollAnimations() {
     x: targetScale, 
     y: targetScale, 
     z: targetScale, 
-    duration: 4, 
+    duration: 4.6, 
     ease: 'power1.inOut' 
   }, 0);
 
-  // 4-PHASE FLIP SEQUENCE
+  // 4-PHASE FLIP SEQUENCE WITH DELAYS
   // 1. Y-axis flip (Side Spin)
   tlHeroToFeatured.to(shoeGroup.rotation, { 
     y: Math.PI * 2, 
@@ -330,19 +331,25 @@ function setupScrollAnimations() {
     ease: 'power2.inOut' 
   }, 0);
 
+  // --- 0.2s Delay ---
+
   // 2. X-axis flip (Front Flip)
   tlHeroToFeatured.to(shoeGroup.rotation, { 
     x: Math.PI * 2, 
     duration: 1, 
     ease: 'power2.inOut' 
-  }, 1);
+  }, 1.2);
+
+  // --- 0.2s Delay ---
 
   // 3. Y-axis reverse flip
   tlHeroToFeatured.to(shoeGroup.rotation, { 
     y: 0, 
     duration: 1, 
     ease: 'power2.inOut' 
-  }, 2);
+  }, 2.4);
+
+  // --- 0.2s Delay ---
 
   // 4. X-axis reverse flip + Settle to Featured Tilt
   tlHeroToFeatured.to(shoeGroup.rotation, { 
@@ -350,8 +357,8 @@ function setupScrollAnimations() {
     y: -Math.PI / 3, 
     z: 0.1,
     duration: 1, 
-    ease: 'power2.out' 
-  }, 3);
+    ease: 'power2.inOut' 
+  }, 3.6);
 
   // Phase 2: Disappear before Collection
   const tlFeaturedToCollection = gsap.timeline({
@@ -421,8 +428,10 @@ function animate() {
   // ── SHOE FLOAT + MOUSE ──
   if (shoeModel) {
     shoeModel.position.y += Math.sin(t * 1.5) * 0.003;
-    shoeGroup.rotation.x += (currentY * 0.25 - shoeGroup.rotation.x) * 0.05;
-    shoeGroup.rotation.y += (currentX * 0.5 - shoeGroup.rotation.y) * 0.05;
+  }
+  if (shoeModel && window.scrollY > 100) {
+    shoeGroup.rotation.y += (targetX * 0.1 - shoeGroup.rotation.y) * 0.05;
+    shoeGroup.rotation.x += (targetY * 0.1 - shoeGroup.rotation.x) * 0.05;
   }
 
   // ── AURA PULSE ──
