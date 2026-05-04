@@ -179,7 +179,7 @@ function loadShoeModel() {
     // DYNAMIC SCALING: Use a base that works for both mobile and desktop mode
     const baseScale = isMobile ? 32 : 42;
     shoeModel.scale.setScalar(baseScale);
-    shoeModel.position.set(0, -3, 0);
+    shoeModel.position.set(0, isMobile ? -5 : -3, 0); // Lowered on mobile
     shoeModel.rotation.set(0.1, -Math.PI / 3, 0.1);
 
     customMaterials.devil = new THREE.MeshPhysicalMaterial({
