@@ -218,7 +218,7 @@ function loadShoeModel() {
 
     // Entrance animation
     gsap.from(shoeModel.position, { y: -30, duration: 2.5, ease: 'power4.out' });
-    gsap.from(shoeModel.rotation, { y: Math.PI * 2, duration: 3.0, ease: 'power3.out' });
+    gsap.from(shoeModel.rotation, { x: Math.PI * 2, duration: 3.0, ease: 'power3.out' });
   });
 }
 
@@ -309,7 +309,7 @@ function setupScrollAnimations() {
   );
   tlHeroToFeatured.fromTo(shoeGroup.rotation,
     { x: 0, y: 0, z: 0 },
-    { x: 0.1, y: Math.PI * 2 + 0.3, z: -0.1, ease: 'none' }, 0
+    { x: Math.PI * 2 + 0.1, y: 0.3, z: -0.1, ease: 'none' }, 0
   );
   tlHeroToFeatured.fromTo(shoeGroup.scale,
     { x: 1, y: 1, z: 1 },
