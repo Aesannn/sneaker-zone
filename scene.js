@@ -324,19 +324,15 @@ function setupScrollAnimations() {
     ease: 'power1.inOut' 
   }, 0);
 
-  // JUST ONE SINGLE SLOW X-AXIS ROTATION (360 degrees)
+  // UNIFIED SINGLE ROTATION (Eliminates jerk and extra flips)
   tlHeroToFeatured.to(shoeGroup.rotation, { 
     x: Math.PI * 2 + 0.1, 
-    duration: 4.6, 
-    ease: 'power1.inOut' 
-  }, 0);
-  
-  tlHeroToFeatured.to(shoeGroup.rotation, { 
     y: -Math.PI / 3, 
     z: 0.1,
     duration: 4.6, 
     ease: 'power1.inOut' 
   }, 0);
+
 
 
 
