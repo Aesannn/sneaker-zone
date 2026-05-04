@@ -418,10 +418,10 @@ section {
   background: transparent;
   border: none;
   color: var(--muted);
-  font-family: var(--font-body);
-  font-size: 1.1rem;
+  font-family: 'Syncopate', sans-serif;
+  font-size: 1rem;
   font-weight: 300;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.1em;
   cursor: none;
   z-index: 200;
   transition: all 0.3s ease;
@@ -431,6 +431,7 @@ section {
   align-items: center;
   justify-content: center;
 }
+
 
 
 .carousel-btn:hover {

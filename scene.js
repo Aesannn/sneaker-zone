@@ -323,31 +323,32 @@ function setupScrollAnimations() {
     ease: 'power1.inOut' 
   }, 0);
 
-  // 2-PHASE SLOW FLIP SEQUENCE: Y -> 1s DELAY -> X -> 1s DELAY -> SETTLE
-  // 1. Y-axis Rotation (Side Spin)
+  // 2-PHASE SLOW ROTATION: Y -> 1s DELAY -> X -> 1s DELAY -> SETTLE
+  // 1. Y-axis Rotation (360 side spin)
   tlHeroToFeatured.to(shoeGroup.rotation, { 
     y: Math.PI * 2, 
-    duration: 1.8, 
-    ease: 'power2.inOut' 
+    duration: 2.0, 
+    ease: 'power1.inOut' 
   }, 0);
 
-  // 2. X-axis Rotation (after 1.0s delay)
-  // Total: 1.8s (spin) + 1.0s (delay) = 2.8s
+  // 2. X-axis Rotation (360 front flip) after 1.0s delay
+  // Total: 2.0s (rotation) + 1.0s (delay) = 3.0s
   tlHeroToFeatured.to(shoeGroup.rotation, { 
     x: Math.PI * 2, 
-    duration: 1.8, 
-    ease: 'power2.inOut' 
-  }, 2.8);
+    duration: 2.0, 
+    ease: 'power1.inOut' 
+  }, 3.0);
 
-  // Settle (Move forward to target tilt, preventing a reverse spin)
-  // Total: 2.8s (spin) + 1.8s (spin) + 1.0s (delay) = 5.6s
+  // 3. Settle (Move forward to target tilt, no reverse)
+  // Total: 3.0s + 2.0s + 1.0s = 6.0s
   tlHeroToFeatured.to(shoeGroup.rotation, { 
     x: Math.PI * 2 + 0.1, 
     y: Math.PI * 2 - Math.PI / 3, 
     z: 0.1,
-    duration: 1.2, 
+    duration: 1.5, 
     ease: 'power2.out' 
-  }, 5.6);
+  }, 6.0);
+
 
 
 
@@ -424,10 +425,14 @@ function animate() {
   if (shoeModel) {
     shoeModel.position.y += Math.sin(t * 1.5) * 0.003;
   }
-  if (shoeModel && window.scrollY > 100) {
+  // Disable mouse rotation when scrolling past the hero to prevent extra spins
+  if (shoeModel && window.scrollY > 100 && window.scrollY < 800) {
+     // No mouse rotation during transition
+  } else if (shoeModel && window.scrollY > 100) {
     shoeGroup.rotation.y += (targetX * 0.1 - shoeGroup.rotation.y) * 0.05;
     shoeGroup.rotation.x += (targetY * 0.1 - shoeGroup.rotation.x) * 0.05;
   }
+
 
   // ── AURA PULSE ──
   const pulse = 1 + Math.sin(t * 2.5) * 0.15;
