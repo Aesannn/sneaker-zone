@@ -323,56 +323,48 @@ function setupScrollAnimations() {
     ease: 'power1.inOut' 
   }, 0);
 
-  // 4-PHASE FLIP SEQUENCE WITH DELAYS
+  // 2-PHASE SLOW FLIP SEQUENCE: Y -> 1s DELAY -> X -> 1s DELAY -> SETTLE
   // 1. Y-axis flip (Side Spin)
   tlHeroToFeatured.to(shoeGroup.rotation, { 
     y: Math.PI * 2, 
-    duration: 1, 
+    duration: 1.8, 
     ease: 'power2.inOut' 
   }, 0);
 
-  // --- 0.2s Delay ---
-
-  // 2. X-axis flip (Front Flip)
+  // 2. X-axis flip (after 1s delay)
+  // Total: 1.8s (spin) + 1.0s (delay) = 2.8s
   tlHeroToFeatured.to(shoeGroup.rotation, { 
     x: Math.PI * 2, 
-    duration: 1, 
+    duration: 1.8, 
     ease: 'power2.inOut' 
-  }, 1.2);
+  }, 2.8);
 
-  // --- 0.2s Delay ---
-
-  // 3. Y-axis reverse flip
-  tlHeroToFeatured.to(shoeGroup.rotation, { 
-    y: 0, 
-    duration: 1, 
-    ease: 'power2.inOut' 
-  }, 2.4);
-
-  // --- 0.2s Delay ---
-
-  // 4. X-axis reverse flip + Settle to Featured Tilt
+  // Settle to Featured Tilt (after another 1s delay)
+  // Total: 2.8s (spin) + 1.8s (spin) + 1.0s (delay) = 5.6s
   tlHeroToFeatured.to(shoeGroup.rotation, { 
     x: 0.1, 
     y: -Math.PI / 3, 
     z: 0.1,
-    duration: 1, 
-    ease: 'power2.inOut' 
-  }, 3.6);
+    duration: 1.2, 
+    ease: 'power2.out' 
+  }, 5.6);
 
-  // Phase 2: Disappear before Collection
+
+  // Phase 2: Disappear before Collection (Bug Fix: Accelerated exit)
   const tlFeaturedToCollection = gsap.timeline({
     scrollTrigger: {
       trigger: '.collection',
       start: 'top bottom',
-      end: 'top 20%',
-      scrub: 0.5,
-      invalidateOnRefresh: true
+      end: 'top 60%',
+      scrub: 0.5, // Faster catch-up
+      invalidateOnRefresh: true,
+      onLeave: () => { gsap.set(shoeGroup.position, { y: 30 }) }, // Ensure it's gone
+      onEnterBack: () => { gsap.set(shoeGroup.position, { y: targetY }) }
     },
   });
 
-  tlFeaturedToCollection.to(shoeGroup.position, { y: 15, ease: 'none' }, 0);
-  tlFeaturedToCollection.to(shoeGroup.scale, { x: 0.1, y: 0.1, z: 0.1, ease: 'none' }, 0);
+  tlFeaturedToCollection.to(shoeGroup.position, { y: 25, ease: 'power2.in' }, 0);
+  tlFeaturedToCollection.to(shoeGroup.scale, { x: 0, y: 0, z: 0, ease: 'power2.in' }, 0);
 }
 
 // ─── RESIZE ────────────────────────────────────────────────────────────────

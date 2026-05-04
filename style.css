@@ -250,9 +250,9 @@ section {
 }
 
 .hero-title .solid {
-  color: #ffaa00;
-  /* Golden */
-  text-shadow: 0 0 30px rgba(255, 170, 0, 0.6), 0 0 60px rgba(255, 170, 0, 0.3);
+  color: var(--cyan);
+  /* Bright Cyan */
+  text-shadow: 0 0 30px rgba(0, 232, 200, 0.6), 0 0 60px rgba(0, 232, 200, 0.3);
 }
 
 .hero-title .fill {
@@ -807,7 +807,9 @@ section {
 }
 
 .section-link {
-  font-size: 0.7rem;
+  font-family: 'Montserrat', sans-serif; /* Cleaner font for arrows */
+  font-size: 0.6rem;
+  font-weight: 300;
   letter-spacing: 0.25em;
   text-transform: uppercase;
   color: var(--muted);
@@ -1463,12 +1465,12 @@ footer {
   }
 
   .hero {
-    padding: 12rem 2rem 0;
+    padding: 15rem 2rem 0; /* Increased top padding for better gap */
   }
 
   .hero-title {
     font-size: 5.5rem;
-    margin-top: -3rem;
+    margin-top: -1.5rem; /* Better gap from top nav */
     line-height: 0.85;
   }
 
