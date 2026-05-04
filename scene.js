@@ -169,8 +169,9 @@ function loadShoeModel() {
   const url = 'https://cdn.jsdelivr.net/gh/mrdoob/three.js@master/examples/models/gltf/MaterialsVariantsShoe/glTF/MaterialsVariantsShoe.gltf';
 
   loader.load(url, (gltf) => {
+    const isMobile = window.innerWidth <= 768;
     shoeModel = gltf.scene;
-    shoeModel.scale.setScalar(45);
+    shoeModel.scale.setScalar(isMobile ? 35 : 45);
     shoeModel.position.set(0, -3, 0);
     shoeModel.rotation.set(0.1, -Math.PI / 3, 0.1);
 
@@ -282,7 +283,7 @@ function setupScrollAnimations() {
   const isMobile = window.innerWidth <= 768;
   const targetX = isMobile ? 0 : -8.5;
   const targetY = isMobile ? 2.5 : 0.8;
-  const targetScale = isMobile ? 0.8 : 0.9;
+  const targetScale = isMobile ? 0.65 : 0.9;
 
   // Phase 1: Hero to Featured
   const tlHeroToFeatured = gsap.timeline({

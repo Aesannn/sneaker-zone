@@ -69,18 +69,13 @@ body::-webkit-scrollbar {
   box-shadow: 0 0 10px var(--cyan);
 }
 
-#cursor-ring {
-  display: none;
-  /* Removed the slow ring */
-}
-
-body:has(a:hover) #cursor,
-body:has(button:hover) #cursor,
-body:has(.size-btn:hover) #cursor,
-body:has(.best-seller-card:hover) #cursor {
-  transform: translate(-50%, -50%) scale(1.5);
-  border-color: var(--cyan);
-  background: rgba(0, 232, 200, 0.1);
+@media (max-width: 1024px) {
+  #cursor {
+    display: none !important;
+  }
+  body {
+    cursor: auto !important;
+  }
 }
 
 /* THREE.JS CANVAS */
