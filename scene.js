@@ -223,8 +223,9 @@ function loadShoeModel() {
     shoeGroup.add(shoeModel);
     setupScrollAnimations();
 
-    // Entrance animation (Slide up only, no rotation to prevent conflict with scroll)
+    // Entrance animation
     gsap.from(shoeModel.position, { y: -30, duration: 2.5, ease: 'power4.out' });
+    gsap.from(shoeModel.rotation, { x: Math.PI * 2, duration: 3.0, ease: 'power3.out' });
 
   });
 }
@@ -323,31 +324,20 @@ function setupScrollAnimations() {
     ease: 'power1.inOut' 
   }, 0);
 
-  // 2-PHASE SLOW ROTATION: Y -> 1s DELAY -> X -> 1s DELAY -> SETTLE
-  // 1. Y-axis Rotation (360 side spin)
+  // JUST ONE SINGLE SLOW Y-AXIS ROTATION (360 degrees)
   tlHeroToFeatured.to(shoeGroup.rotation, { 
-    y: Math.PI * 2, 
-    duration: 2.0, 
+    y: Math.PI * 2 - Math.PI / 3, 
+    duration: 4.6, 
+    ease: 'power1.inOut' 
+  }, 0);
+  
+  tlHeroToFeatured.to(shoeGroup.rotation, { 
+    x: 0.1, 
+    z: 0.1,
+    duration: 4.6, 
     ease: 'power1.inOut' 
   }, 0);
 
-  // 2. X-axis Rotation (360 front flip) after 1.0s delay
-  // Total: 2.0s (rotation) + 1.0s (delay) = 3.0s
-  tlHeroToFeatured.to(shoeGroup.rotation, { 
-    x: Math.PI * 2, 
-    duration: 2.0, 
-    ease: 'power1.inOut' 
-  }, 3.0);
-
-  // 3. Settle (Move forward to target tilt, no reverse)
-  // Total: 3.0s + 2.0s + 1.0s = 6.0s
-  tlHeroToFeatured.to(shoeGroup.rotation, { 
-    x: Math.PI * 2 + 0.1, 
-    y: Math.PI * 2 - Math.PI / 3, 
-    z: 0.1,
-    duration: 1.5, 
-    ease: 'power2.out' 
-  }, 6.0);
 
 
 
