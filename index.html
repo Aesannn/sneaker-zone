@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VOID — Defy Gravity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Oswald:wght@400;500;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- CAROUSEL CONTROLS -->
+<button class="carousel-btn next" onclick="window.nextTheme()">&#10095;</button>
+
+<!-- THREE.JS CANVAS -->
+<canvas id="bg-canvas"></canvas>
+<!-- FOREGROUND SNEAKER CANVAS -->
+<div id="canvas-container"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">V<span>O</span>ID</a>
+  <ul class="nav-links">
+    <li><a href="#collection">Collection</a></li>
+    <li><a href="#best-sellers">Originals</a></li>
+    <li><a href="#featured">Limited</a></li>
+    <li><a href="#philosophy">About</a></li>
+  </ul>
+  <a href="javascript:void(0)" class="nav-cart" onclick="toggleCart()">
+    Bag
+    <span class="count" style="display:none;">0</span>
+  </a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+
+
+  <!-- Slide indicators -->
+  <div class="slide-indicators">
+    <div class="slide-dot active" onclick="window.goToTheme(0)" title="Devil's Covenant"></div>
+    <div class="slide-dot" onclick="window.goToTheme(1)" title="Phantom Gaze"></div>
+    <div class="slide-dot" onclick="window.goToTheme(2)" title="Crimson Requiem"></div>
+  </div>
+
+  <!-- Theme name label -->
+  <div class="theme-label" id="themeLabel">DEVIL'S COVENANT</div>
+
+  <p class="hero-sub">S/S 2025 — Devil's Covenant</p>
+  <h1 class="hero-title">
+    <span class="solid">DEFY</span>
+    <span class="fill">THE</span>
+    <span class="accent">VOID</span>
+  </h1>
+  <div class="hero-bottom">
+    <p class="hero-desc">Where physics ends, style begins. Engineered for those who never touch ground.</p>
+    <div class="hero-cta">
+      <button class="btn-primary" onclick="document.getElementById('collection').scrollIntoView({behavior:'smooth'})"><span>SHOP NOW</span></button>
+      <a href="#" class="btn-ghost">View Lookbook</a>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- FEATURED PRODUCT -->
+<section class="featured" id="featured">
+  <div class="featured-visual" id="featured-visual">
+    <div class="featured-bg-text">ORBIT</div>
+    <!-- Floating specs -->
+    <div class="spec-float spec-gravity">
+      <span class="val">9.2</span>
+      Gravity Index
+    </div>
+    <div class="spec-float spec-weight">
+      <span class="val">180g</span>
+      Net Weight
+    </div>
+    <div class="spec-float spec-comfort">
+      <span class="val">∞</span>
+      Comfort Rating
+    </div>
+
+
+    <div class="featured-orbit-wrap">
+      <div class="orbit-container">
+        <div class="orbit-ring">
+          <div class="orbit-dot"></div>
+        </div>
+        <div class="orbit-ring">
+          <div class="orbit-dot orange"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="featured-info">
+    <div class="product-tag">Featured Drop</div>
+    <h2 class="product-name">ORBIT<br>RUNNER</h2>
+    <p class="product-sub">Pro — Midnight Void</p>
+    <p class="product-desc">Engineered in zero-gravity test chambers. The Orbit Runner PRO redefines what it means to float. Ultra-responsive foam core with anti-gravity rebound technology.</p>
+    
+    <div class="theme-selector" style="margin-bottom: 1.5rem;">
+      <p class="size-label">Select Material Variant</p>
+      <div class="sizes" id="material-variants">
+        <button class="size-btn active" data-variant="devil">DVL</button>
+        <button class="size-btn" data-variant="phantom">PHM</button>
+        <button class="size-btn" data-variant="bloodmary">BLD</button>
+      </div>
+    </div>
+
+    <div class="product-price-row">
+      <span class="price-main">$289</span>
+      <span class="price-old">$350</span>
+      <span class="price-badge">-17%</span>
+    </div>
+    <div class="size-row">
+      <p class="size-label">Select Size (US)</p>
+      <div class="sizes">
+        <button class="size-btn sold-out">6</button>
+        <button class="size-btn" onclick="selectSize(this)">7</button>
+        <button class="size-btn" onclick="selectSize(this)">7.5</button>
+        <button class="size-btn active" onclick="selectSize(this)">8</button>
+        <button class="size-btn" onclick="selectSize(this)">8.5</button>
+        <button class="size-btn" onclick="selectSize(this)">9</button>
+        <button class="size-btn" onclick="selectSize(this)">9.5</button>
+        <button class="size-btn" onclick="selectSize(this)">10</button>
+        <button class="size-btn sold-out">11</button>
+      </div>
+    </div>
+    <div class="add-row">
+      <button class="btn-add" onclick="addToCart(this)">ADD TO BAG</button>
+      <button class="btn-wish" title="Wishlist">♡</button>
+    </div>
+  </div>
+</section>
+
+<!-- COLLECTION -->
+<section class="collection" id="collection">
+  <div class="section-header">
+    <h2 class="section-title">
+      NEW<br>
+      <span class="dim">DROPS</span>
+    </h2>
+    <a href="#" class="section-link">View All →</a>
+  </div>
+  <div class="product-grid">
+
+    <!-- Card 1: Aegis Prime -->
+    <div class="product-card">
+      <div class="card-img-wrap">
+        <div class="card-badge">Legendary</div>
+        <div class="card-glitch-wrap"></div>
+        <div class="card-scan-overlay"></div>
+        <div class="scan-line-active"></div>
+        <div class="card-wireframe"></div>
+        <img src="./assets/New Drops/Aegis Prime.png" alt="Aegis Prime" class="best-seller-img">
+      </div>
+      <div class="card-body">
+        <p class="card-collection">Aegis Series</p>
+        <h3 class="card-name">AEGIS PRIME</h3>
+        <p class="card-variant">Black Gold / Solar Flare</p>
+        <div class="card-bottom">
+          <span class="card-price">$480</span>
+          <button class="card-quick-add" onclick="addToCart(this)">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2: Lunar Eclipse -->
+    <div class="product-card">
+      <div class="card-img-wrap">
+        <div class="card-badge new">New</div>
+        <div class="card-glitch-wrap"></div>
+        <div class="card-scan-overlay"></div>
+        <div class="scan-line-active"></div>
+        <div class="card-wireframe"></div>
+        <img src="./assets/New Drops/Lunar Eclipse.png" alt="Lunar Eclipse" class="best-seller-img">
+      </div>
+      <div class="card-body">
+        <p class="card-collection">Eclipse Series</p>
+        <h3 class="card-name">LUNAR ECLIPSE</h3>
+        <p class="card-variant">Moonstone / Polar White</p>
+        <div class="card-bottom">
+          <span class="card-price">$450</span>
+          <button class="card-quick-add" onclick="addToCart(this)">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3: Magma Core -->
+    <div class="product-card">
+      <div class="card-img-wrap">
+        <div class="card-badge">Hot</div>
+        <div class="card-glitch-wrap"></div>
+        <div class="card-scan-overlay"></div>
+        <div class="scan-line-active"></div>
+        <div class="card-wireframe"></div>
+        <img src="./assets/New Drops/Magma Core.png" alt="Magma Core" class="best-seller-img">
+      </div>
+      <div class="card-body">
+        <p class="card-collection">Inferno Series</p>
+        <h3 class="card-name">MAGMA CORE</h3>
+        <p class="card-variant">Obsidian / Lava Red</p>
+        <div class="card-bottom">
+          <span class="card-price">$440</span>
+          <button class="card-quick-add" onclick="addToCart(this)">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 4: Orion Prism -->
+    <div class="product-card">
+      <div class="card-img-wrap">
+        <div class="card-badge new">New</div>
+        <div class="card-glitch-wrap"></div>
+        <div class="card-scan-overlay"></div>
+        <div class="scan-line-active"></div>
+        <div class="card-wireframe"></div>
+        <img src="./assets/New Drops/Orion Prism.png" alt="Orion Prism" class="best-seller-img">
+      </div>
+      <div class="card-body">
+        <p class="card-collection">Orion Series</p>
+        <h3 class="card-name">ORION PRISM</h3>
+        <p class="card-variant">Iridium / Holographic</p>
+        <div class="card-bottom">
+          <span class="card-price">$430</span>
+          <button class="card-quick-add" onclick="addToCart(this)">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 5: Specter X -->
+    <div class="product-card">
+      <div class="card-img-wrap">
+        <div class="card-badge">Rare</div>
+        <div class="card-glitch-wrap"></div>
+        <div class="card-scan-overlay"></div>
+        <div class="scan-line-active"></div>
+        <div class="card-wireframe"></div>
+        <img src="./assets/New Drops/Specter X.png" alt="Specter X" class="best-seller-img">
+      </div>
+      <div class="card-body">
+        <p class="card-collection">Stealth Series</p>
+        <h3 class="card-name">SPECTER X</h3>
+        <p class="card-variant">Stealth Black / Toxic Green</p>
+        <div class="card-bottom">
+          <span class="card-price">$410</span>
+          <button class="card-quick-add" onclick="addToCart(this)">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 6: Zero Kelvin -->
+    <div class="product-card">
+      <div class="card-img-wrap">
+        <div class="card-badge">Rare</div>
+        <div class="card-glitch-wrap"></div>
+        <div class="card-scan-overlay"></div>
+        <div class="scan-line-active"></div>
+        <div class="card-wireframe"></div>
+        <img src="./assets/New Drops/Zero Kelvin.png" alt="Zero Kelvin" class="best-seller-img">
+      </div>
+      <div class="card-body">
+        <p class="card-collection">Frostbite Series</p>
+        <h3 class="card-name">ZERO KELVIN</h3>
+        <p class="card-variant">Arctic Blue / Glacier Grey</p>
+        <div class="card-bottom">
+          <span class="card-price">$420</span>
+          <button class="card-quick-add" onclick="addToCart(this)">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</section>
+
+<!-- VOID RIFT TRANSITION -->
+<section class="void-rift-section">
+  <div class="rift-text">VOID RIFT</div>
+</section>
+
+<!-- BEST SELLERS -->
+<section class="collection best-sellers" id="best-sellers">
+  <!-- 3D Intro Sequence -->
+  <div class="intro-sequence-wrap">
+    <canvas id="intro-canvas"></canvas>
+    <div class="intro-text">
+      <h2 class="intro-main-title">BEST SELLERS</h2>
+      <p class="intro-sub-title">SCROLL TO UNLOCK THE ARCHIVE</p>
+    </div>
+  </div>
+
+  <!-- Product Content (Revealed after intro) -->
+  <div class="best-sellers-shop">
+    <div class="section-header">
+      <h2 class="section-title">
+        BEST<br>
+        <span class="dim">SELLERS</span>
+      </h2>
+      <a href="#" class="section-link">View All →</a>
+    </div>
+    <div class="product-grid">
+
+    <!-- Card 1 -->
+    <div class="product-card best-seller-card" data-archive="genesis">
+      <div class="card-img-wrap">
+        <div class="card-badge">Proto</div>
+        <div class="card-scan-overlay"></div>
+        <div class="scan-line-active"></div>
+        <div class="card-wireframe"></div>
+        <img src="./assets/Best 3/Genesis MK-1.png" alt="Genesis MK-1" class="best-seller-img">
+      </div>
+      <div class="card-body">
+        <p class="card-collection">The Vault Series</p>
+        <h3 class="card-name">GENESIS MK-1</h3>
+        <p class="card-variant">Copper / Brushed Steel</p>
+        <div class="card-bottom">
+          <span class="card-price">$310</span>
+          <button class="card-quick-add" onclick="addToCart(this)">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="product-card best-seller-card" data-archive="chronos">
+      <div class="card-img-wrap">
+        <div class="card-scan-overlay"></div>
+        <div class="scan-line-active"></div>
+        <div class="card-wireframe"></div>
+        <img src="./assets/Best 3/Chronos Shift.png" alt="Chronos Shift" class="best-seller-img">
+      </div>
+      <div class="card-body">
+        <p class="card-collection">The Vault Series</p>
+        <h3 class="card-name">CHRONOS SHIFT</h3>
+        <p class="card-variant">Off-White / Crimson</p>
+        <div class="card-bottom">
+          <span class="card-price">$420</span>
+          <button class="card-quick-add" onclick="addToCart(this)">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="product-card best-seller-card" data-archive="echo">
+      <div class="card-img-wrap">
+        <div class="card-badge new">Rare</div>
+        <div class="card-scan-overlay"></div>
+        <div class="scan-line-active"></div>
+        <div class="card-wireframe"></div>
+        <img src="./assets/Best 3/Echo Strider.png" alt="Echo Strider" class="best-seller-img">
+      </div>
+      <div class="card-body">
+        <p class="card-collection">The Vault Series</p>
+        <h3 class="card-name">ECHO STRIDER</h3>
+        <p class="card-variant">Obsidian / Volt Green</p>
+        <div class="card-bottom">
+          <span class="card-price">$245</span>
+          <button class="card-quick-add" onclick="addToCart(this)">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="philosophy" id="philosophy">
+  <div class="philosophy-text">
+    <p class="philosophy-eyebrow">— Our Obsession</p>
+    <h2 class="philosophy-title">BUILT<br>FOR THE<br>WEIGHTLESS</h2>
+    <p class="philosophy-body">We don't make shoes. We engineer escapes from gravity. Every stitch, every sole, every molecule is designed to make you feel like you're floating two inches off the earth.</p>
+    <a href="#" class="btn-ghost" style="display:inline-block;">Our Story →</a>
+  </div>
+  <div class="philosophy-visual">
+    <div class="phi-card">
+      <div class="phi-bar"></div>
+      <span class="phi-card-icon" style="color:var(--orange);">⬡</span>
+      <h3 class="phi-card-title">ANTI-GRAVITY FOAM</h3>
+      <p class="phi-card-desc">Proprietary ZeroG compound absorbs 94% of impact force. Engineered at molecular level for infinite rebound.</p>
+    </div>
+    <div class="phi-card">
+      <div class="phi-bar" style="background: linear-gradient(to right, var(--cyan), transparent);"></div>
+      <span class="phi-card-icon" style="color:var(--cyan);">◈</span>
+      <h3 class="phi-card-title">ORBITAL MESH</h3>
+      <p class="phi-card-desc">300-denier aerospace-grade upper. Breathes like atmosphere, holds like gravity. Weighs less than your ambition.</p>
+    </div>
+    <div class="phi-card">
+      <div class="phi-bar" style="background: linear-gradient(to right, var(--gold), transparent);"></div>
+      <span class="phi-card-icon" style="color:var(--gold);">✦</span>
+      <h3 class="phi-card-title">VOID OUTSOLE</h3>
+      <p class="phi-card-desc">Multi-vector carbon rubber grid. Grips every surface like tidal force while flexing with zero resistance.</p>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="reviews">
+  <div class="reviews-marquee">
+    <div class="reviews-track">
+      <!-- Review 1 -->
+      <div class="review-card">
+        <div class="review-header">
+          <span class="review-user">Alex Rivera</span>
+          <div class="review-stars">★★★★★</div>
+        </div>
+        <p class="review-text">"Finally, a pair of sneakers that actually feels like walking on clouds. The ZeroG foam is revolutionary."</p>
+        <span class="review-product">Verified: Aegis Prime</span>
+      </div>
+      <!-- Review 2 -->
+      <div class="review-card">
+        <div class="review-header">
+          <span class="review-user">Sarah Chen</span>
+          <div class="review-stars">★★★★★</div>
+        </div>
+        <p class="review-text">"The aesthetic is unmatched. Every time I wear my Lunar Eclipses, people ask where I got them."</p>
+        <span class="review-product">Verified: Lunar Eclipse</span>
+      </div>
+      <!-- Review 3 -->
+      <div class="review-card">
+        <div class="review-header">
+          <span class="review-user">Marcus Thorne</span>
+          <div class="review-stars">★★★★★</div>
+        </div>
+        <p class="review-text">"Engineered to perfection. As an athlete, the responsiveness and weight of these shoes is game-changing."</p>
+        <span class="review-product">Verified: Magma Core</span>
+      </div>
+      <!-- Review 4 -->
+      <div class="review-card">
+        <div class="review-header">
+          <span class="review-user">Elena Vance</span>
+          <div class="review-stars">★★★★★</div>
+        </div>
+        <p class="review-text">"The VOID showroom experience is just as premium as the products themselves. 10/10 service."</p>
+        <span class="review-product">Verified: Orion Prism</span>
+      </div>
+      <!-- Review 5 -->
+      <div class="review-card">
+        <div class="review-header">
+          <span class="review-user">David Wu</span>
+          <div class="review-stars">★★★★★</div>
+        </div>
+        <p class="review-text">"I've owned every major brand, but VOID is on a different level of innovation. The Aegis Prime is a masterpiece."</p>
+        <span class="review-product">Verified: Aegis Prime</span>
+      </div>
+      <!-- Review 6 -->
+      <div class="review-card">
+        <div class="review-header">
+          <span class="review-user">Sophia Bell</span>
+          <div class="review-stars">★★★★★</div>
+        </div>
+        <p class="review-text">"Breathable, light, and incredibly stylish. Perfect for both the track and the streets."</p>
+        <span class="review-product">Verified: Specter X</span>
+      </div>
+      <!-- Review 7 -->
+      <div class="review-card">
+        <div class="review-header">
+          <span class="review-user">Julian Cross</span>
+          <div class="review-stars">★★★★★</div>
+        </div>
+        <p class="review-text">"The attention to detail in the packaging and the shoes is insane. Worth every penny."</p>
+        <span class="review-product">Verified: Zero Kelvin</span>
+      </div>
+      <!-- Duplicate for infinite loop -->
+      <div class="review-card">
+        <div class="review-header">
+          <span class="review-user">Alex Rivera</span>
+          <div class="review-stars">★★★★★</div>
+        </div>
+        <p class="review-text">"Finally, a pair of sneakers that actually feels like walking on clouds. The ZeroG foam is revolutionary."</p>
+        <span class="review-product">Verified: Aegis Prime</span>
+      </div>
+      <div class="review-card">
+        <div class="review-header">
+          <span class="review-user">Sarah Chen</span>
+          <div class="review-stars">★★★★★</div>
+        </div>
+        <p class="review-text">"The aesthetic is unmatched. Every time I wear my Lunar Eclipses, people ask where I got them."</p>
+        <span class="review-product">Verified: Lunar Eclipse</span>
+      </div>
+      <div class="review-card">
+        <div class="review-header">
+          <span class="review-user">Marcus Thorne</span>
+          <div class="review-stars">★★★★★</div>
+        </div>
+        <p class="review-text">"Engineered to perfection. As an athlete, the responsiveness and weight of these shoes is game-changing."</p>
+        <span class="review-product">Verified: Magma Core</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <h2 class="newsletter-title">ENTER<br>THE VOID</h2>
+  <p class="newsletter-sub">Get early access to drops. No spam. Just gravity-defying alerts.</p>
+  <div class="email-form">
+    <input type="email" class="email-input" placeholder="your@email.com" id="emailInput">
+    <button class="email-submit" onclick="handleSubscribe()">LAUNCH →</button>
+  </div>
+</section>
+
+    <!-- X-RAY SIDEBAR -->
+    <div class="xray-sidebar">
+      <div class="xray-label">SYSTEM DIAGNOSTICS</div>
+      <div class="xray-visual">
+        <canvas id="xray-canvas"></canvas>
+      </div>
+      <div class="xray-stats">
+        <div class="stat-row"><span>MASS:</span> <span class="stat-val">0.0g</span></div>
+        <div class="stat-row"><span>THRUST:</span> <span class="stat-val">ACTIVE</span></div>
+        <div class="stat-row"><span>SYNC:</span> <span class="stat-val">98.2%</span></div>
+      </div>
+    </div>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">V<span>O</span>ID</div>
+    <p class="footer-tagline">Defying gravity since 2021.<br>Crafted for those who float<br>above the ordinary.</p>
+    <div class="social-links">
+      <a href="#" class="social-link">IG</a>
+      <a href="#" class="social-link">TW</a>
+      <a href="#" class="social-link">TK</a>
+      <a href="#" class="social-link">YT</a>
+    </div>
+  </div>
+  <div>
+    <p class="footer-col-title">Shop</p>
+    <ul class="footer-links">
+      <li><a href="#">New Arrivals</a></li>
+      <li><a href="#">Running</a></li>
+      <li><a href="#">Lifestyle</a></li>
+      <li><a href="#">Limited</a></li>
+      <li><a href="#">Collab</a></li>
+    </ul>
+  </div>
+  <div>
+    <p class="footer-col-title">Support</p>
+    <ul class="footer-links">
+      <li><a href="#">Size Guide</a></li>
+      <li><a href="#">Shipping</a></li>
+      <li><a href="#">Returns</a></li>
+      <li><a href="#">FAQ</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </div>
+  <div>
+    <p class="footer-col-title">Company</p>
+    <ul class="footer-links">
+      <li><a href="#">About VOID</a></li>
+      <li><a href="#">Careers</a></li>
+      <li><a href="#">Press</a></li>
+      <li><a href="#">Sustainability</a></li>
+      <li><a href="#">Community</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <span class="footer-copy">© 2025 VOID INDUSTRIES. ALL RIGHTS RESERVED.</span>
+  <span class="footer-copy">PRIVACY ·  TERMS · COOKIES</span>
+</div>
+
+<!-- CART OVERLAY -->
+<div id="cart-overlay" class="cart-overlay" onclick="toggleCart()"></div>
+<div id="cart-sidebar" class="cart-sidebar">
+  <div class="cart-header">
+    <h2 class="cart-title">YOUR VOID SHOWROOM</h2>
+    <button class="cart-close" onclick="toggleCart()">✕</button>
+  </div>
+    <div id="cart-items" class="cart-items">
+      <div class="cart-empty">
+        <p class="empty-msg">GO AND SHOP SOMETHING COOL</p>
+      </div>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Subtotal</span>
+        <span id="cart-subtotal">$0.00</span>
+      </div>
+      <button class="btn-primary" style="width: 100%; margin-top: 1rem;"><span>CHECKOUT</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- SIZE PICKER MODAL -->
+<div id="size-picker-overlay" class="size-picker-overlay"></div>
+<div id="size-picker-modal" class="size-picker-modal">
+  <button class="modal-close" onclick="window.closeSizePicker()">✕</button>
+  <div class="modal-content">
+    <p class="modal-tag">SYNCHRONIZING FIT...</p>
+    <h2 id="modal-product-name" class="modal-title">SNEAKER NAME</h2>
+    <p id="modal-product-variant" class="modal-variant">S/S 2025 SERIES</p>
+    
+    <div class="modal-size-section">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1rem;">
+        <p class="modal-label">CHOOSE YOUR SIZE</p>
+        <span class="modal-unit">US MENS</span>
+      </div>
+      <div class="modal-sizes" id="modal-size-grid">
+        <button class="size-btn" onclick="window.selectModalSize(this)">6</button>
+        <button class="size-btn" onclick="window.selectModalSize(this)">7</button>
+        <button class="size-btn" onclick="window.selectModalSize(this)">7.5</button>
+        <button class="size-btn" onclick="window.selectModalSize(this)">8</button>
+        <button class="size-btn" onclick="window.selectModalSize(this)">8.5</button>
+        <button class="size-btn" onclick="window.selectModalSize(this)">9</button>
+        <button class="size-btn" onclick="window.selectModalSize(this)">9.5</button>
+        <button class="size-btn" onclick="window.selectModalSize(this)">10</button>
+        <button class="size-btn" onclick="window.selectModalSize(this)">11</button>
+      </div>
+    </div>
+    
+    <div class="modal-footer-msg">
+      <span class="pulse-dot"></span> SECURE TRANSACTION INITIALIZED
+    </div>
+  </div>
+</div>
+
+
+<!-- SCRIPTS -->
+
+<script type="module" src="./main.js"></script>
+</body>
+</html>
