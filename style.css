@@ -1498,10 +1498,9 @@ footer {
   }
 
   .slide-indicators {
-    bottom: 8.5rem;
-    left: 50%;
-    transform: translateX(-50%);
+    display: none !important;
   }
+
 
   .scroll-hint {
     bottom: 2rem;

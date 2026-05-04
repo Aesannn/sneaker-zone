@@ -324,19 +324,20 @@ function setupScrollAnimations() {
     ease: 'power1.inOut' 
   }, 0);
 
-  // JUST ONE SINGLE SLOW Y-AXIS ROTATION (360 degrees)
+  // JUST ONE SINGLE SLOW X-AXIS ROTATION (360 degrees)
   tlHeroToFeatured.to(shoeGroup.rotation, { 
-    y: Math.PI * 2 - Math.PI / 3, 
+    x: Math.PI * 2 + 0.1, 
     duration: 4.6, 
     ease: 'power1.inOut' 
   }, 0);
   
   tlHeroToFeatured.to(shoeGroup.rotation, { 
-    x: 0.1, 
+    y: -Math.PI / 3, 
     z: 0.1,
     duration: 4.6, 
     ease: 'power1.inOut' 
   }, 0);
+
 
 
 
