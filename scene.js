@@ -324,14 +324,14 @@ function setupScrollAnimations() {
   }, 0);
 
   // 2-PHASE SLOW FLIP SEQUENCE: Y -> 1s DELAY -> X -> 1s DELAY -> SETTLE
-  // 1. Y-axis flip (Side Spin)
+  // 1. Y-axis Rotation (Side Spin)
   tlHeroToFeatured.to(shoeGroup.rotation, { 
     y: Math.PI * 2, 
     duration: 1.8, 
     ease: 'power2.inOut' 
   }, 0);
 
-  // 2. X-axis flip (after 1s delay)
+  // 2. X-axis Rotation (after 1.0s delay)
   // Total: 1.8s (spin) + 1.0s (delay) = 2.8s
   tlHeroToFeatured.to(shoeGroup.rotation, { 
     x: Math.PI * 2, 
@@ -339,7 +339,7 @@ function setupScrollAnimations() {
     ease: 'power2.inOut' 
   }, 2.8);
 
-  // Settle to Featured Tilt (after another 1s delay)
+  // Settle (after another 1s delay)
   // Total: 2.8s (spin) + 1.8s (spin) + 1.0s (delay) = 5.6s
   tlHeroToFeatured.to(shoeGroup.rotation, { 
     x: 0.1, 
@@ -348,6 +348,8 @@ function setupScrollAnimations() {
     duration: 1.2, 
     ease: 'power2.out' 
   }, 5.6);
+
+
 
 
   // Phase 2: Disappear before Collection (Bug Fix: Accelerated exit)

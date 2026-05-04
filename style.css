@@ -417,19 +417,21 @@ section {
   transform: translateY(-50%);
   background: transparent;
   border: none;
-  color: var(--orange);
-  font-size: 4rem;
-  font-weight: bold;
+  color: var(--muted);
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  font-weight: 300;
+  letter-spacing: 0.2em;
   cursor: none;
   z-index: 200;
-  /* High z-index to stay above everything */
   transition: all 0.3s ease;
   padding: 1rem;
-  text-shadow: 0 0 20px rgba(255, 69, 0, 0.6);
+  text-shadow: none;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 
 .carousel-btn:hover {
   color: #FF8C00;
