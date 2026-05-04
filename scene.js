@@ -78,15 +78,19 @@ export function initScene() {
   rimLight.position.set(-6, 4, 2);
   scene.add(rimLight);
 
-  // Postprocessing
+  // Postprocessing - DISABLE BLOOM ON MOBILE FOR PERFORMANCE
+  const isMobile = window.innerWidth <= 1024;
   const renderScene = new RenderPass(scene, camera);
-  const bloomPass = new UnrealBloomPass(
-    new THREE.Vector2(window.innerWidth, window.innerHeight),
-    1.2, 0.5, 0.6
-  );
   composer = new EffectComposer(fgRenderer);
   composer.addPass(renderScene);
-  composer.addPass(bloomPass);
+
+  if (!isMobile) {
+    const bloomPass = new UnrealBloomPass(
+      new THREE.Vector2(window.innerWidth, window.innerHeight),
+      1.2, 0.5, 0.6
+    );
+    composer.addPass(bloomPass);
+  }
 
   document.addEventListener('mousemove', e => {
     targetX = (e.clientX / window.innerWidth - 0.5) * 2;
@@ -104,7 +108,8 @@ export function initScene() {
 function initUniverse() {
   // Stars
   const starGeo = new THREE.BufferGeometry();
-  const starCount = 4000;
+  const isMobile = window.innerWidth <= 1024;
+  const starCount = isMobile ? 1500 : 4000;
   const starPos = new Float32Array(starCount * 3);
   const starSizes = new Float32Array(starCount);
   for (let i = 0; i < starCount; i++) {
@@ -169,9 +174,11 @@ function loadShoeModel() {
   const url = 'https://cdn.jsdelivr.net/gh/mrdoob/three.js@master/examples/models/gltf/MaterialsVariantsShoe/glTF/MaterialsVariantsShoe.gltf';
 
   loader.load(url, (gltf) => {
-    const isMobile = window.innerWidth <= 768;
+    const isMobile = window.innerWidth <= 1024;
     shoeModel = gltf.scene;
-    shoeModel.scale.setScalar(isMobile ? 35 : 45);
+    // DYNAMIC SCALING: Use a base that works for both mobile and desktop mode
+    const baseScale = isMobile ? 32 : 42;
+    shoeModel.scale.setScalar(baseScale);
     shoeModel.position.set(0, -3, 0);
     shoeModel.rotation.set(0.1, -Math.PI / 3, 0.1);
 
@@ -280,18 +287,18 @@ function updateHeroLabel(variant) {
 
 function setupScrollAnimations() {
 
-  const isMobile = window.innerWidth <= 768;
+  const isMobile = window.innerWidth <= 1024;
   const targetX = isMobile ? 0 : -8.5;
   const targetY = isMobile ? 2.5 : 0.8;
-  const targetScale = isMobile ? 0.65 : 0.9;
+  const targetScale = isMobile ? 0.6 : 0.85;
 
   // Phase 1: Hero to Featured
   const tlHeroToFeatured = gsap.timeline({
     scrollTrigger: {
       trigger: '.featured',
       start: 'top bottom',
-      end: 'top 20%',
-      scrub: 0.1,
+      end: 'top 10%',
+      scrub: 0.5, // Smoother scrub
       invalidateOnRefresh: true,
       onLeaveBack: () => {
         gsap.set(shoeGroup.position, { x: 0, y: 0, z: 0 });
@@ -301,20 +308,28 @@ function setupScrollAnimations() {
     },
   });
 
-  tlHeroToFeatured.to(bgClearColor, { r: 0.005, g: 0, b: 0.01, duration: 1 }, 0);
+  tlHeroToFeatured.to(bgClearColor, { r: 0.005, g: 0, b: 0.01, duration: 2 }, 0);
 
-  tlHeroToFeatured.fromTo(shoeGroup.position,
-    { x: 0, y: 0, z: 0 },
-    { x: targetX, y: targetY, z: 0, ease: 'none' }, 0
-  );
-  tlHeroToFeatured.fromTo(shoeGroup.rotation,
-    { x: 0, y: 0, z: 0 },
-    { x: Math.PI * 2 + 0.1, y: 0.3, z: -0.1, ease: 'none' }, 0
-  );
-  tlHeroToFeatured.fromTo(shoeGroup.scale,
-    { x: 1, y: 1, z: 1 },
-    { x: targetScale, y: targetScale, z: targetScale, ease: 'none' }, 0
-  );
+  // Position and Scale
+  tlHeroToFeatured.to(shoeGroup.position, { x: targetX, y: targetY, z: 0, duration: 2, ease: 'power2.inOut' }, 0);
+  tlHeroToFeatured.to(shoeGroup.scale, { x: targetScale, y: targetScale, z: targetScale, duration: 2, ease: 'power2.inOut' }, 0);
+
+  // ANIMATION SEQUENCE
+  // 1. Flip once in Y axis (Side Spin)
+  tlHeroToFeatured.to(shoeGroup.rotation, { 
+    y: Math.PI * 2, 
+    duration: 1.5, 
+    ease: 'power2.inOut' 
+  }, 0);
+
+  // 2. Slight delay/pause (implied by duration gaps or deliberate empty tween)
+  
+  // 3. Reverse flip in X axis (Back Flip) with slight delay
+  tlHeroToFeatured.to(shoeGroup.rotation, { 
+    x: -Math.PI * 2, 
+    duration: 1.5, 
+    ease: 'power2.inOut' 
+  }, 1.8); // Starts at 1.8s (after Y spin completes at 1.5s + 0.3s delay)
 
   // Phase 2: Disappear before Collection
   const tlFeaturedToCollection = gsap.timeline({
